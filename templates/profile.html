@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Profile{% endblock %}
+
+{% block content %}
+  <section class="section-padding d-flex align-items-center" style="min-height: 80vh; padding-top: 50px; padding-bottom: 50px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card p-4 shadow-sm border-0"> <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="https://source.unsplash.com/150x150/?portrait,man" class="rounded-circle img-fluid border border-3 border-light shadow-sm" alt="Profile Picture">
+                            
+                            <h3 class="mt-3">Alex Green</h3> 
+                            <p class="text-muted">President</p>
+                        </div>
+                        
+                        <div>
+                            <h5 style="color: var(--bs-primary);">Bio</h5> <p>As the president of APEX, Alex is dedicated to fostering a community of service and leadership. With a passion for social justice, Alex has been instrumental in organizing many of the club's most successful charity events and initiatives.</p>
+
+                            <h5 class="mt-4" style="color: var(--bs-primary);">Contact Information</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><strong>Email:</strong> alex.green@university.edu</li>
+                                <li class="mb-2"><strong>Phone:</strong> (123) 456-7890</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <a href="#" class="btn btn-outline-primary">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+{% endblock %}
