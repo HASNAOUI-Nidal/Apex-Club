@@ -23,6 +23,11 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--secondary-blue);
 }
 
+/* New Utility Class for your Green Text */
+.text-brand {
+    color: var(--primary-green) !important;
+}
+
 .section-padding {
   padding: 100px 0;
 }
@@ -66,6 +71,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Navbar Branding */
 .navbar-brand {
     font-weight: 700;
     font-size: 1.5rem;
@@ -83,23 +89,47 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-green);
 }
 
+/* Enhanced Footer */
 .footer {
-    background-color: var(--secondary-blue);
-    color: var(--white);
-    padding: 50px 0;
+    background-color: var(--dark-slate); /* Uses your custom dark variable */
+    color: var(--light-text);
+    border-top: 4px solid var(--primary-green); /* Nice accent line */
     margin-top: auto;
+}
+
+.footer h5 {
+    color: var(--white);
+    margin-bottom: 1.2rem;
 }
 
 .footer a {
     color: var(--white);
     text-decoration: none;
     opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .footer a:hover {
     opacity: 1;
-    text-decoration: none;
+    color: var(--primary-green) !important;
+}
+
+/* Social Icons Style */
+.footer .social-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    color: var(--white);
+    margin-right: 5px;
+}
+
+.footer .social-icon:hover {
+    background: var(--primary-green);
+    transform: translateY(-3px);
 }
 
 img {
@@ -144,21 +174,35 @@ img {
 .form-floating > .form-control:focus ~ label {
     color: var(--primary-green);
 }
-
-.recent-work-section {
-    background-color: var(--dark-slate);
-}
-
-.recent-work-card {
-    background-color: var(--secondary-blue);
-    color: var(--light-text);
-}
-
-.recent-work-card .card-title {
-    color: var(--accent-gold);
-}
-
+/* Fix for Recent Work Card Images */
 .recent-work-card .card-img-top {
-    height: 200px;
-    object-fit: cover;
+    height: 250px;       /* Forces all images to be the same height */
+    width: 100%;         /* Ensures full width */
+    object-fit: cover;   /* Crops the image to fit the box without distorting it */
+    object-position: center; /* Centers the image content */
+}
+
+/* Toast Animations */
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#flash-messages .toast {
+    animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Match Alerts to Theme */
+.bg-success {
+    background-color: var(--primary-green) !important;
+}
+
+.bg-danger {
+    background-color: #EF4444 !important;
 }

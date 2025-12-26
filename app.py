@@ -189,9 +189,71 @@ def profile():
 def articles():
     return render_template('articles.html')
 
+@app.route('/members')
+def members():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # كنجيبو غير الناس اللي عندهم فريق (يعني ماشي يوزرز عاديين)
+    # كنرتبوهم بـ Team باش يسهل علينا العرض
+    query = "SELECT * FROM users WHERE team IS NOT NULL ORDER BY team, role"
+    cursor.execute(query)
+    all_members = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('members.html', members=all_members)
+
 @app.route('/article/1')
 def article_detail():
     return render_template('article-details1.html')
+
+# أضف هذا الكود في app.py
+
+@app.route('/add_member', methods=['GET', 'POST'])
+def add_member():
+    # حماية الصفحة: غير نتا (اللي مكونيكطي) اللي تقدر تدخل ليها
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # 1. جمع المعلومات من الفورم
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        phone = request.form.get('phone_number')
+        role = request.form.get('role')      # مثال: President, Volunteer
+        team = request.form.get('team')      # مثال: Board, IT, Volunteer
+        
+        # 2. إنشاء مود باس افتراضي (123456)
+        password = generate_password_hash("123456")
+        
+        # 3. معالجة الصورة
+        filename = 'profile.jpg' # الصورة الافتراضية إلا ماخترتيش صورة
+        if 'profile_image' in request.files:
+            file = request.files['profile_image']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                # حفظ الصورة
+                file.save(os.path.join(app.root_path, app.config['UPLOAD_FOLDER'], filename))
+
+        # 4. الإدخال في الداتابيز
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        try:
+            cursor.execute('''
+                INSERT INTO users (first_name, last_name, email, phone_number, password, role, team, profile_image) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ''', (first_name, last_name, email, phone, password, role, team, filename))
+            mysql.connection.commit()
+            flash(f'Member {first_name} added successfully!', 'success')
+        except Exception as e:
+            flash('Error! Maybe email already exists.', 'danger')
+        finally:
+            cursor.close()
+        
+        # البقاء في نفس الصفحة لإضافة عضو آخر بسرعة
+        return redirect(url_for('add_member'))
+
+    return render_template('add_member.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
