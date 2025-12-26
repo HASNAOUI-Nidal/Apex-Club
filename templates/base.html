@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}APEX{% endblock %}</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/IMG_0513.png') }}" type="image/png">
+    
     {% block styles %}{% endblock %}
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">APEX</a>
+            <a class="navbar-brand fw-bold" href="{{ url_for('home') }}" style="color: #0d6efd;">APEX</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,12 +37,14 @@
                 </ul>
                 
                 {% if session.get('loggedin') %}
-                    <div class="d-flex">
-                        <a href="{{ url_for('profile') }}" class="btn btn-outline-dark ms-lg-3">Profile</a>
-                        <a href="{{ url_for('logout') }}" class="btn btn-danger ms-2">Logout</a>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ url_for('profile') }}" class="btn btn-outline-dark ms-lg-3 me-2">
+                            <i class="fas fa-user-circle me-1"></i> Profile
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
                     </div>
                 {% else %}
-                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary ms-lg-3">Login</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary ms-lg-3 px-4">Login</a>
                 {% endif %}
             </div>
         </div>
@@ -45,8 +54,8 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                        <i class="fas fa-info-circle me-2"></i> {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
@@ -57,35 +66,38 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="footer mt-5">
+    <footer class="footer mt-5 bg-dark text-white pt-5 pb-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h5>APEX Club</h5>
-                    <p>Making a difference, together.</p>
+                <div class="col-md-6 mb-4">
+                    <h5 class="fw-bold text-primary">APEX Club</h5>
+                    <p class="text-white-50">Making a difference, together. Join our community to learn, grow, and impact the world.</p>
                 </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="{{ url_for('articles') }}">Articles</a></li>
+                        <li><a href="{{ url_for('home') }}" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="{{ url_for('articles') }}" class="text-white-50 text-decoration-none">Articles</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h5>Follow Us</h5>
-                    <a href="#" class="me-2">Facebook</a>
-                    <a href="#" class="me-2">Twitter</a>
-                    <a href="#">Instagram</a>
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <div class="text-center">
+            <hr class="border-secondary">
+            <div class="text-center text-white-50">
                 <small>&copy; 2025 APEX Club. All Rights Reserved.</small>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -94,6 +106,7 @@
             mirror: true
         });
     </script>
+    
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
