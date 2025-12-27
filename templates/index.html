@@ -105,7 +105,7 @@
                     <div class="card-body">
                          <small class="text-muted"><i class="far fa-calendar me-1"></i> {{ event.date_str }}</small>
                          <h5 class="card-title fw-bold mt-2">{{ event.title }}</h5>
-                         <p class="card-text text-muted small">{{ event.description }}</p>
+                         <p class="card-text text-muted small">{{ event.description | truncate(100) }}</p>
                          <a href="{{ url_for('event_detail', id=event.id) }}" class="btn btn-outline-primary btn-sm rounded-pill mt-2">Details</a>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                         
                         <span class="badge bg-primary mb-2 align-self-start">{{ article.subject }}</span>
                         
-                        <p class="card-text text-muted">{{ article.summary }}</p>
+                        <p class="card-text text-muted">{{ article.summary | truncate(100) }}</p>
                         
                         <a href="{{ url_for('article_detail_dynamic', id=article.id) }}" class="btn btn-outline-dark mt-auto align-self-start">Read Article</a>
                     </div>
@@ -149,7 +149,11 @@
             <div class="col-12 text-center text-white">
                 <div class="p-4 border border-light rounded">
                     <h3>No articles yet!</h3>
-                    <p>Go to <a href="{{ url_for('add_article') }}" class="text-warning">/add_article</a> to publish your first story.</p>
+                    {% if session.get('loggedin') %}
+                        <p>Go to <a href="{{ url_for('add_article') }}" class="text-warning">/add_article</a> to publish your first story.</p>
+                    {% else %}
+                        <p>Stay tuned for upcoming articles!</p>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
