@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Event Image</label>
+                            <label class="form-label fw-bold">Event Image (Cover)</label>
                             <input type="file" name="event_image" class="form-control" required>
                             <small class="text-muted">Upload to static/images folder automatically</small>
                         </div>
@@ -48,7 +48,7 @@
 
                         <div class="mb-4">
                             <label class="form-label fw-bold">Full Article Content (Magazine Page)</label>
-                            <textarea name="content" class="form-control" rows="10" required></textarea>
+                            <textarea name="content" class="form-control" rows="10"></textarea>
                         </div>
 
                         <div class="d-grid">
@@ -62,9 +62,55 @@
     </div>
 </div>
 
-<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script src="https://cdn.tiny.cloud/1/n8rmskjt0bjpc15y1txddgo33y2edf3dbzi2d4vircwbwfbw/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script>
-    // Only apply CKEditor to the 'content' field
-    CKEDITOR.replace('content');
+  tinymce.init({
+    selector: 'textarea[name="content"]', // Targets the content textarea
+    height: 500,
+    menubar: true,
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | blocks | ' +
+      'bold italic forecolor | alignleft aligncenter ' +
+      'alignright alignjustify | bullist numlist outdent indent | ' +
+      'removeformat | image media table code | help',
+    
+    /* IMAGE HANDLING:
+       This allows you to drag/drop images directly into the editor.
+       It converts them to Base64 (text) automatically so they display 
+       without needing a complex backend upload script right now.
+    */
+    image_title: true,
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    file_picker_callback: (cb, value, meta) => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+          const id = 'blobid' + (new Date()).getTime();
+          const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+          const base64 = reader.result.split(',')[1];
+          const blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+
+          cb(blobInfo.blobUri(), { title: file.name });
+        });
+        reader.readAsDataURL(file);
+      });
+
+      input.click();
+    },
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+  });
 </script>
 {% endblock %}
