@@ -31,5 +31,4 @@ six==1.17.0
 SQLAlchemy==2.0.42
 typing_extensions==4.14.1
 tzdata==2025.2
-virtualenv==20.32.0
 Werkzeug==3.1.3
