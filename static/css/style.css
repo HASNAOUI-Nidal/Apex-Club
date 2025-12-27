@@ -181,7 +181,54 @@ img {
     object-fit: cover;   /* Crops the image to fit the box without distorting it */
     object-position: center; /* Centers the image content */
 }
+/* --- Events Page Styling --- */
 
+/* Smaller Header for internal pages */
+.page-header {
+    padding-top: 140px; /* Account for fixed navbar */
+    padding-bottom: 80px;
+}
+
+/* Event Card Hover Effect */
+.event-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+}
+
+/* Image scaling inside card on hover */
+.event-card .card-img-top {
+    height: 240px; /* Fixed height for consistency */
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.event-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Date Badge Style */
+.event-date {
+    min-width: 60px;
+    line-height: 1.2;
+    z-index: 10;
+}
+
+/* Button Outline Primary Customization to match Green */
+.btn-outline-primary {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    color: #fff;
+}
 /* Toast Animations */
 @keyframes slideInRight {
     0% {

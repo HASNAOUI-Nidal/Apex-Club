@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin | Add Event{% endblock %}
+
+{% block content %}
+<div class="container section-padding">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white text-center py-4">
+                    <h3><i class="fas fa-calendar-plus me-2"></i>Post New Event</h3>
+                </div>
+                <div class="card-body p-5">
+                    
+                    <form action="{{ url_for('add_event') }}" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Event Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Ex: Visit to Orphanage" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Date</label>
+                                <input type="text" name="date_str" class="form-control" placeholder="Ex: Dec 25, 2024" required>
+                                <small class="text-muted">Format: Month Day, Year</small>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Category</label>
+                                <select name="category" class="form-select">
+                                    <option value="Social">Social</option>
+                                    <option value="Cultural">Cultural</option>
+                                    <option value="Recreational">Recreational</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Event Image</label>
+                            <input type="file" name="event_image" class="form-control" required>
+                            <small class="text-muted">Upload to static/images folder automatically</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Short Summary (For Home Page)</label>
+                            <textarea name="description" class="form-control" rows="3" placeholder="Write 1 or 2 sentences here. No HTML. This appears on the small card." required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Full Article Content (Magazine Page)</label>
+                            <textarea name="content" class="form-control" rows="10" required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Publish Event</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    // Only apply CKEditor to the 'content' field
+    CKEDITOR.replace('content');
+</script>
+{% endblock %}
